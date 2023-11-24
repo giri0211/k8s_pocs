@@ -1,3 +1,3 @@
 # overview
 
-utilities will have sample tools can be used for trouble shooting and testing few k8s features.
+Utilities will have sample tools, that can be used for troubleshooting and testing k8s features
