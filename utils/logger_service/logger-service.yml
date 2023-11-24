@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-server
+spec:
+  selector:
+    matchLabels:
+      app: logger-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logger-server
+    spec:
+      containers:
+      - name: main
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            # Use 'wget' to make an HTTP request to the target service
+            # wget -q -O /dev/null http://nginx-logs-container.default.svc.cluster.local:80
+            echo "logs from logger-server"
+            sleep 20  # Adjust the delay between requests as needed
+          done
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logger-server
+spec:
+  ports:
+    - port: 80
+      targetPort: 80 # should match pod's `containerPort` value
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: logger-server
