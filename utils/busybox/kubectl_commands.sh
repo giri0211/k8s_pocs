@@ -6,13 +6,15 @@ kubectl get deploy coredns -n kube-system -o yaml
 
 # use busybox for cluster network troubleshooting
 kubectl apply -f ./utils/busybox
-kubectl exec -it pod/network-check-848455cd94-dfc7t -- /bin/sh
+kubectl exec -it pod/network-check-678776db5d-l74n6 -- /bin/sh
 nslookup kubernetes.default
 exit
 kubectl delete -f ./utils/busybox
 
 # one time pod up for troubleshooting networking
 kubectl run busybox --image busybox:1.28 --restart=Never --rm -it busybox -- sh
+kubectl logs pod/busybox
+kubectl delete pod/busybox -- /bin/sh
 
 kubectl get svc
 kubectl get nodes 
