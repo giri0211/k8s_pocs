@@ -1,0 +1,72 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: example-deployment
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: example
+#   template:
+#     metadata:
+#       labels:
+#         app: example
+#     spec:
+#       containers:
+#       - name: example-container
+#         image: nginx:latest
+#         volumeMounts:
+#         - name: data-volume
+#           mountPath: /usr/share/nginx/html
+#   volumes:
+#   - name: data-volume
+#     persistentVolumeClaim:
+#       claimName: example-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-check
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: network-check
+  template:
+    metadata:
+      labels:
+        app: network-check
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:1.28
+        command:
+          - sleep
+          - "3600"
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: data-volume
+          mountPath: /usr/share/nginx/html
+      restartPolicy: Always
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: example-pvc
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: efs-sc-test
+  resources:
+    requests:
+      storage: 100Mi
