@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-test1
+spec:
+  serviceName: "statefulset-test1"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: statefulset-test1
+  template:
+    metadata:
+      labels:
+        app: statefulset-test1
+    spec:
+      containers:
+      - name: statefulset-test1-container
+        image: nginx
+        volumeMounts:
+        - name: statefulset-test1-volume
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: statefulset-test1-volume
+    spec:
+      storageClassName: "ebs-sc"
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

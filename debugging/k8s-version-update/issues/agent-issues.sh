@@ -38,7 +38,7 @@ aws eks --region us-east-1 update-kubeconfig --name tig-4570-blueprints-v5-upd
 
 
 kubectl get pods -n grafana-agent
-kubectl logs pod/grafana-agent-0   -n grafana-agent --since=2m
+kubectl logs pod/grafana-agent-0   -n grafana-agent --since=5m
 kubectl logs pod/grafana-agent-traces-6d5b5686b5-tz7xz   -n grafana-agent --since=10m
 
 kubectl get pvc -n grafana-agent
@@ -128,6 +128,22 @@ aws eks --region us-east-1 update-kubeconfig --name csa-deployments
 
 
 kubectl edit pvc agent-wal-grafana-agent-0 -n grafana-agent
+
+
+kubectl get pvc agent-wal-grafana-agent-0 -n grafana-agent -o json | \
+  jq 'del(.metadata.finalizers)' | \
+  kubectl replace --raw "/api/v1/namespaces/grafana-agent/persistentvolumeclaims/agent-wal-grafana-agent-0" -f -
+
+  kubectl patch pvc agent-wal-grafana-agent-0 -n grafana-agent --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]'
+
+
+finalizers:
+  - kubernetes.io/pvc-protection
+
+"finalizers": [
+      "kubernetes.io/pvc-protection"
+    ],
+
 
 kubectl get sc
 

@@ -1,8 +1,24 @@
-export AWS_PROFILE=phr-platform-dev
-echo $AWS_PROFILE
+export AWS_CONFIG_FILE=/mnt/c/Users/ra_Girish.Tirumalase/.aws/config
+export AWS_SHARED_CREDENTIALS_FILE=/mnt/c/Users/ra_Girish.Tirumalase/.aws/credentials
+export AWS_SHARED_CREDENTIALS_FILE=/mnt/c/Users/ra_Girish.Tirumalase/.aws/credentials
+export KUBECONFIG=/mnt/c/Users/ra_Girish.Tirumalase/.kube/config
+export AWS_PROFILE=phr-platform-dev-phr-infra-platform-sandbox-admin
+echo $AWS_PROFILE 
+echo $AWS_CONFIG_FILE 
+echo $AWS_SHARED_CREDENTIALS_FILE
 aws sso login
 
- aws eks --region us-east-1 update-kubeconfig --name patient-access 
+
+aws ec2 describe-subnets --subnet-ids subnet-0efca800c3cbd1a50 --query "Subnets[*].AvailableIpAddressCount" 
+aws ec2 describe-subnets --subnet-ids subnet-02a67745eedcfd6d2 --query "Subnets[*].AvailableIpAddressCount" 
+
+subnet-01c766c1a51cd9a16 
+ aws eks --region us-east-1 update-kubeconfig --name tig-4623-drain-nodes
+ kubectl get ns
+
+
+aws sts assume-role --role-arn arn:aws:iam::768421872330:role/authentication-eks-admin-accesss --role-session-name admin-access
+aws eks --region us-east-1 update-kubeconfig --name authentication --role-arn arn:aws:iam::768421872330:role/authentication-eks-admin-access
 
 # Assume the cluster administrator role
 # aws sts assume-role --role-arn arn:aws:iam::622268126582:role/csa-deployments-csa-eks-admin-access --role-session-name cluster-admin
@@ -34,5 +50,7 @@ bundle
       puma
       -C
       config/puma.rb
+      
 
+      list-addons --cluster-name tig-4658-csa-eks-1-26
 

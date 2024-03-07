@@ -1,17 +1,18 @@
 #!/bin/bash
 
+# platfrom-dev
 # Assume the cluster administrator role
-# aws sts assume-role --role-arn arn:aws:iam::622268126582:role/csa-deployments-csa-eks-admin-access --role-session-name cluster-admin
+# aws sts assume-role --role-arn arn:aws:iam::622268126582:role/tig-4658-csa-eks-1-26-csa-eks-admin-access --role-session-name cluster-admin
 # # Update kubeconfig with cluster administrator role
-# aws eks --region us-east-1 update-kubeconfig --name csa-deployments  --role-arn arn:aws:iam::622268126582:role/csa-deployments-csa-eks-admin-access
+# aws eks --region us-east-1 update-kubeconfig --name tig-4658-csa-eks-1-26  --role-arn arn:aws:iam::622268126582:role/tig-4658-csa-eks-1-26-csa-eks-admin-access
 
 
-# new eks_teams
+# sandbox
 
 # Assume the cluster administrator role
-# aws sts assume-role --role-arn arn:aws:iam::622268126582:policy/csa-deployments-csa-eks-admin-administrator-access --role-session-name cluster-admin-1
+# aws sts assume-role --role-arn arn:aws:iam::545444110299:policy/csa-deployments-csa-eks-admin-administrator-access --role-session-name cluster-admin-1
 # # Update kubeconfig with cluster administrator role
-# aws eks --region us-east-1 update-kubeconfig --name csa-deployments  --role-arn arn:aws:iam::622268126582:role/csa-deployments-csa-eks-admin-administrator-access
+# aws eks --region us-east-1 update-kubeconfig --name csa-deployments  --role-arn arn:aws:iam::545444110299:role/csa-deployments-csa-eks-admin-administrator-access
 
 
 

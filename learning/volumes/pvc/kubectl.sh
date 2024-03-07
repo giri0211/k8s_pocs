@@ -19,3 +19,11 @@ kubectl get pods --all-namespaces | grep efs.csi.aws.com
 
 
 kubectl get pods -l app=network-check -o wide --watch
+
+kubectl get sc
+kubectl edit sc gp2
+
+kubectl apply -f ./learning/volumes/pvc/ebs/pvc.yml --dry-run=client
+kubectl get pvc 
+kubectl get pv
+

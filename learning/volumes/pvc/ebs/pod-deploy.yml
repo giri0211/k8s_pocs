@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volume-test-ebs-pvc-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volume-test-ebs-pvc-1
+  template:
+    metadata:
+      labels:
+        app: volume-test-ebs-pvc-1
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:1.28
+        command:
+          - sleep
+          - "3600"
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: data-volume
+          mountPath: /usr/share/nginx/html
+      restartPolicy: Always
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: ebs-pvc-1

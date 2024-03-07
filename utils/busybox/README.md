@@ -16,12 +16,19 @@ kubectl get deploy coredns -n kube-system -o yaml
 # use busybox for cluster network troubleshooting
 kubectl apply -f ./utils/busybox
 kubectl exec -it pod/network-check-848455cd94-dfc7t -- /bin/sh
+
 nslookup kubernetes.default
 exit
 kubectl delete -f ./utils/busybox
 
 # one time pod up for troubleshooting networking
 kubectl run busybox --image busybox:1.28 --restart=Never --rm -it busybox -- sh
+kubectl run curl-test --image=curlimages/curl --restart=Never --rm -it -- sh
+kubectl run mycurlpod --image=curlimages/curl -i --tty -- sh
+
+kubectl exec -it pod/mycurlpod -- /bin/sh
+curl google.com
+curl https://google.com
 
 kubectl get svc
 kubectl get nodes 
