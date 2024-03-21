@@ -8,12 +8,18 @@ echo $AWS_CONFIG_FILE
 echo $AWS_SHARED_CREDENTIALS_FILE
 aws sso login
 
+$env:AWS_PROFILE="phr-platform-dev-phr-infra-platform-sandbox-admin"
+$env:AWS_PROFILE
+aws sso login
+
+aws configure sso
+aws eks --region us-east-1 update-kubeconfig --name csa-deployments
 
 aws ec2 describe-subnets --subnet-ids subnet-0efca800c3cbd1a50 --query "Subnets[*].AvailableIpAddressCount" 
 aws ec2 describe-subnets --subnet-ids subnet-02a67745eedcfd6d2 --query "Subnets[*].AvailableIpAddressCount" 
 
 subnet-01c766c1a51cd9a16 
- aws eks --region us-east-1 update-kubeconfig --name tig-4623-drain-nodes
+
  kubectl get ns
 
 

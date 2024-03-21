@@ -41,7 +41,11 @@ kubectl get --raw "/api/v1/nodes/ip-10-155-162-80.ec2.internal/proxy/logs/?query
 
 kubectl get pods --watch
 
+    kubectl apply -f ./utils/busybox
 
+
+kubectl run mycurlpod --image=curlimages/curl -i --tty -- sh
+curl google.com
 
 
 

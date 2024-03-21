@@ -26,7 +26,7 @@ aws eks --region us-east-1 update-kubeconfig --name tig-2977-gitops-hub-argocd
 
 # spoke cluster
 aws eks --region us-east-1 update-kubeconfig --name tig-2977-gitops-hub-spoke
-
+kubectl cluster-info
 
 aws eks --region us-east-1 update-kubeconfig --name tig-4721-o11y-logs
 
@@ -35,7 +35,7 @@ tig-2977-eks-mgd-node
 aws eks --region us-east-1 update-kubeconfig --name tig-2977-gitops-ec2
 
 
-
+kubectl get ns
 kubectl get pods -n argocd
 kubectl get sgp -n argocd
 
@@ -48,6 +48,27 @@ kubectl delete -f ./utils/argocd/guest-book-sample.yml
 
 kubectl apply -f ./utils/argocd/guestbook.yml
 
+
+kubectl cluster-info
+
+
+kubectl apply -f ./utils/gitops/examples/workloads-hub.yaml
+kubectl delete -f ./utils/gitops/examples/workloads-hub.yaml
+
+kubectl --context hub get applications -n argocd -w
+kubectl get applications -n argocd -w
+
+cluster-addons
+
+aws eks --region us-east-1 update-kubeconfig --name tig-2977-gitops-hub-argocd
+kubectl config current-context
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/applicationset/v0.4.0/manifests/install.yaml
+
+kubectl delete application guestbook-spoke-cluster  -n argocd --force --grace-period=0
+
+kubectl apply -f ./utils/gitops/examples/workloads-spoke.yaml
+kubectl delete -f ./utils/gitops/examples/workloads-spoke.yaml
 
 argocd proj list
 

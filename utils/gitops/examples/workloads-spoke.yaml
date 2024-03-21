@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook-spoke
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+  generators:
+  - list:
+      elements:
+      - cluster: engineering-dev
+        url: https://7F490F5B44615B76E3F83AED886957F6.gr7.us-east-1.eks.amazonaws.com
+  template:
+    metadata:
+      name: 'guestbook-spoke-cluster'
+    spec:
+      project: default
+      source:
+        # repoURL: '{{metadata.annotations.workload_repo_url}}'
+        # path: '{{metadata.annotations.workload_repo_basepath}}{{metadata.annotations.workload_repo_path}}'
+        # targetRevision: '{{metadata.annotations.workload_repo_revision}}'
+        path: guestbook
+        repoURL: 'https://github.com/argoproj/argocd-example-apps.git'
+        targetRevision: HEAD
+      destination:
+        namespace: default
+        server: https://7F490F5B44615B76E3F83AED886957F6.gr7.us-east-1.eks.amazonaws.com
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true

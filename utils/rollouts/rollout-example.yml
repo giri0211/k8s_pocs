@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: example-rollout
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+      - name: example-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+  strategy:
+    canary:
+      steps:
+      - setWeight: 25
+      - pause: {}
+      - setWeight: 50
+      - pause: {}
+      - setWeight: 75
+      - pause: {}
+      - setWeight: 100
