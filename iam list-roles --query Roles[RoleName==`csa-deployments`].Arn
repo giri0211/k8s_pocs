@@ -1,0 +1,109 @@
+[
+    {
+        "Path": "/",
+        "RoleName": "csa-deployments-cluster-20240403154709696000000003",
+        "RoleId": "AROAX57YAT7N7GG4FZSKL",
+        "Arn": "arn:aws:iam::545444110299:role/csa-deployments-cluster-20240403154709696000000003",
+        "CreateDate": "2024-04-03T15:47:09+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "EKSClusterAssumeRole",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "eks.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        },
+        "MaxSessionDuration": 3600
+    },
+    {
+        "Path": "/",
+        "RoleName": "csa-deployments-csa-eks-admin-access",
+        "RoleId": "AROAX57YAT7NXV54WSZJQ",
+        "Arn": "arn:aws:iam::545444110299:role/csa-deployments-csa-eks-admin-access",
+        "CreateDate": "2024-04-03T15:47:09+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AssumeRole",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "AWS": [
+                            "arn:aws:iam::545444110299:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_phr-eng-infra-platform-admin_d6d7fe8a60304958",
+                            "arn:aws:iam::545444110299:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_phr-dev-devops-aws-sandbox-rw_0b3dbf5b805e990b",
+                            "arn:aws:iam::545444110299:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_aws-contractor-sandbox-rw_a42b4ba541fae06f",
+                            "arn:aws:iam::545444110299:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_phr-infra-platform-sandbox-admin_9a8688f2cbb42058"
+                        ]
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        },
+        "MaxSessionDuration": 3600
+    },
+    {
+        "Path": "/",
+        "RoleName": "csa-deployments-observability",
+        "RoleId": "AROAX57YAT7NYLXPB5ZGQ",
+        "Arn": "arn:aws:iam::545444110299:role/csa-deployments-observability",
+        "CreateDate": "2024-04-03T16:05:58+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Federated": "arn:aws:iam::545444110299:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0D715931A8D55FB7B43FA02512E97842"
+                    },
+                    "Action": "sts:AssumeRoleWithWebIdentity",
+                    "Condition": {
+                        "StringEquals": {
+                            "oidc.eks.us-east-1.amazonaws.com/id/0D715931A8D55FB7B43FA02512E97842:sub": "system:serviceaccount:grafana-agent:grafana-agent"
+                        }
+                    }
+                }
+            ]
+        },
+        "MaxSessionDuration": 3600
+    },
+    {
+        "Path": "/",
+        "RoleName": "csa-deployments-project-template-access",
+        "RoleId": "AROAX57YAT7NQOUCPXFIP",
+        "Arn": "arn:aws:iam::545444110299:role/csa-deployments-project-template-access",
+        "CreateDate": "2024-04-03T15:58:18+00:00",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "AssumeRole",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "AWS": "arn:aws:iam::545444110299:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_phr-dev-devops-aws-sandbox-rw_0b3dbf5b805e990b"
+                    },
+                    "Action": "sts:AssumeRole"
+                },
+                {
+                    "Sid": "IRSA",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Federated": "arn:aws:iam::545444110299:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0D715931A8D55FB7B43FA02512E97842"
+                    },
+                    "Action": "sts:AssumeRoleWithWebIdentity",
+                    "Condition": {
+                        "StringEquals": {
+                            "oidc.eks.us-east-1.amazonaws.com/id/0D715931A8D55FB7B43FA02512E97842:aud": "sts.amazonaws.com",
+                            "oidc.eks.us-east-1.amazonaws.com/id/0D715931A8D55FB7B43FA02512E97842:sub": "system:serviceaccount:project-template:project-template"
+                        }
+                    }
+                }
+            ]
+        },
+        "MaxSessionDuration": 3600
+    }
+]

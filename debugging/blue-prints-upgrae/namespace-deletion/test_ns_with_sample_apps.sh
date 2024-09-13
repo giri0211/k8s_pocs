@@ -4,7 +4,7 @@ arn:aws:iam::622268126582:policy/csa-deployments-csa-eks-admin-administrator-acc
 
 
 # force deletet the finalizers on the namespace before deleting the namespace.
-NAMESPACE=test-ns2
+NAMESPACE=keda
 kubectl get namespace $NAMESPACE -o json | sed 's/"kubernetes"//' | kubectl replace --raw "/api/v1/namespaces/$NAMESPACE/finalize" -f -
 
 
@@ -22,7 +22,7 @@ kubectl get pods -n test-ns1
 kubectl get pods -n test-ns2
 
 kubectl edit ns test-ns
-kubectl delete ns test-ns1 test-ns2
+kubectl delete ns keda
 
 
 

@@ -1,0 +1,17 @@
+# ---
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: nginxdemo
+#   namespace: keda
+#   annotations:
+#     eks.amazonaws.com/role-arn: arn:aws:iam::622268126582:role/keda-nginxdemo-role-tig-6351
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginxdemo-keda-assume-role-sa
+  namespace: keda
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::545444110299:role/keda-nginxdemo-role-tig-6351
+---

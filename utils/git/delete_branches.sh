@@ -1,17 +1,46 @@
 #!/bin/bash
 
-# Get the current branch
-current_branch=$(git rev-parse --abbrev-ref HEAD)
+# "feature/tig-4502-check-cluster-access"
+#             "feature/tig-4502-cluster-access-v2"
+#             "feature/tig-4518-o11s-module-resource-updates"
+#             "feature/tig-4570-teams-module-upgrade"
+#             "feature/tig-4658-eks-module-upgrade-spike"
+#             "feature/tig-4723-vpc-cni-addon-version"
+#             "feature/tig-4787-vpc-addon-issue-fix"
+#             "feature/tig-4860-document-cluster-upgrade"
+#             "feature/tig-4900-eks-examples-on-sandbox-env"
+#             "feature/tig-4981-document-dependencies"
+#             "feature/tig-4991-vpa-endpoint-issue"
+#             "feature/tig-4994-VP-webhook-config-v2"
+#             "feature/tig-4994-vpa-webhook-config-latest"
+#             "feature/tig-4994-vpa-webhook-config-v3"
+#             "feature/tig-5114-admin-access"
+#             "feature/tig-5411-admin-access-additional-iam-policy"
 
-# Fetch the latest branches from the remote repository
-git fetch -p
+# List of branches to delete
+branches=( "feature/tig-4502-cluster-access-v2"
+            "feature/tig-4518-o11s-module-resource-updates"
+            "feature/tig-4570-teams-module-upgrade"
+            "feature/tig-4658-eks-module-upgrade-spike"
+            "feature/tig-4723-vpc-cni-addon-version"
+            "feature/tig-4787-vpc-addon-issue-fix"
+            "feature/tig-4860-document-cluster-upgrade"
+            "feature/tig-4900-eks-examples-on-sandbox-env"
+            "feature/tig-4981-document-dependencies"
+            "feature/tig-4991-vpa-endpoint-issue"
+            "feature/tig-4994-VP-webhook-config-v2"
+            "feature/tig-4994-vpa-webhook-config-latest"
+            "feature/tig-4994-vpa-webhook-config-v3"
+            "feature/tig-5114-admin-access"
+            "feature/tig-5411-admin-access-additional-iam-policy" 
+            )
 
-# Iterate through local branches and delete them (except the current branch)
-for branch in $(git for-each-ref --format '%(refname:short)' refs/heads/); do
-  if [ "$branch" != "$current_branch" ]; then
-    git branch -D "$branch"
-    echo "deleted - $branch"
-  fi
+# Delete local branches
+for branch in "${branches[@]}"; do
+    git branch -d "$branch"
 done
 
-echo "Local branches (except the current branch) have been deleted."
+# Delete remote branches
+for branch in "${branches[@]}"; do
+    git push origin --delete "$branch"
+done

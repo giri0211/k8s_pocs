@@ -15,7 +15,7 @@ kubectl apply -f ./
 kubectl apply -f ./utils/busybox -n platform-showcase
 # Error from server (Forbidden): error when creating "utils/busybox/network-check.yml": deployments.apps is forbidden: User "platform-showcase" cannot create resource "deployments" in API group "apps" in the namespace "platform-showcase"
 
-kubectl exec -it pod/network-check-678776db5d-86wg6 -- /bin/sh
+kubectl exec -it pod/network-check-678776db5d-5c6v2 -- /bin/sh
 nslookup kubernetes.default.svc
 nslookup google.com
 nslookup mimir-nonprod.shared-services.phreesia.services

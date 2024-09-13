@@ -1,0 +1,18 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::545444110299:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/491FA5E829F0CF6D337B52BD8B8CBA4B"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.us-east-1.amazonaws.com/id/491FA5E829F0CF6D337B52BD8B8CBA4B:sub": "system:serviceaccount:keda:keda-operator",
+                    "oidc.eks.us-east-1.amazonaws.com/id/491FA5E829F0CF6D337B52BD8B8CBA4B:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}

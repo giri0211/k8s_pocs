@@ -155,3 +155,125 @@
 
 
 # platform_team_name, platform_team_data in var.platform_team
+
+
+# variable "my_data" {
+#   type = list(object({
+#     key1 = string
+#     key2 = number
+#     key3 = bool
+#   }))
+#   default = [
+#     {
+#       key1 = "value1"
+#       key2 = 123
+#       key3 = true
+#     },
+#     {
+#       key1 = "value2"
+#       key2 = 456
+#       key3 = false
+#     },
+#     {
+#       key1 = "value3"
+#       key2 = 789
+#       key3 = true
+#     }
+#   ]
+# }
+
+# resource "null_resource" "example" {
+#   for_each = { for idx, data in var.my_data : idx => data }
+
+#   triggers = {
+#     key1 = each.value.key1
+#     key2 = each.value.key2
+#     key3 = each.value.key3
+#   }
+
+#   # This is just a placeholder resource for demonstration
+# }
+
+# locals {
+#   platform_team_user = "arn:aws:iam::545444110299:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_aws-fte-sandbox-rw_5ff0dbcd7cea19b9"
+#   replaced_by_string_match = replace(local.platform_team_user, "aws-reserved/sso.amazonaws.com/", "")
+#   replaced_by_regex_match = replace(local.platform_team_user, "//.*//", "/")
+# }
+# output "replaced_by_string_match" {
+#   value = local.replaced_by_string_match
+# }
+
+# output "replaced_by_regex_match" {
+#   value = local.replaced_by_regex_match
+# }
+
+# locals {
+#   # Directories start with "C:..." on Windows; All other OSs use "/" for root.
+#   is_windows = substr(pathexpand("~"), 0, 1) == "/" ? false : true
+# }
+
+# resource "null_resource" "cli_command" {
+#   provisioner "local-exec" {
+#     interpreter = local.is_windows ? ["PowerShell", "-Command"] : ["/bin/bash", "-c"]
+#     command     = "sleep 60"
+#   }
+# }
+
+# output "is_windows" {
+#   value = local.is_windows
+# }
+
+# output "pathexpand" {
+#   value = pathexpand("~")
+# }
+
+
+provider "aws" {
+  region = "us-east-1" 
+    default_tags {
+    tags = {
+      "contact"            = "aaron-degroff"
+      "costcenter"         = "cc3230"
+      "domain"             = "platform-infrastructure-engineering"
+      "dataclassification" = "general"
+      "group"              = "terraform-modules"
+      "repository"         = "terraform-aws-s3"
+    }
+  }
+}
+
+# data "aws_default_tags" "current" {}
+
+# output "aws_default_tags" {
+#   value = data.aws_default_tags.current.tags
+# }
+
+
+
+# data "aws_eks_cluster" "cluster" {
+#   name = "keda-addon-demo"
+# }
+
+# data "aws_iam_openid_connect_provider" "oidc_provider" {
+#   url = data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+# }
+
+
+
+locals {
+  oidc_provider_arn = "arn:aws:iam::545444110299:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/E9593BA1E15E10C4020425FDA0017E4B"
+  oidc_provider_url = "https://oidc.eks.us-east-1.amazonaws.com/id/E9593BA1E15E10C4020425FDA0017E4B"
+}
+
+
+output "oidc_provider_domain_from_arn" {
+  value = "${replace(local.oidc_provider_arn, "/^(.*provider/)/", "")}:sub"
+}
+
+output "oidc_provider_domain_from_url" {
+  value = "${replace(local.oidc_provider_url, "https://", "")}:sub"
+}
+
+
+
+

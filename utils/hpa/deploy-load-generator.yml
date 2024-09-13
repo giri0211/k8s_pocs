@@ -21,7 +21,7 @@ spec:
         - |
           while true; do
             # Use 'wget' to make an HTTP request to the target service
-            wget -q -O /dev/null http://svc-nginx.default.svc.cluster.local:80
+            wget -q -O /dev/null http://svc-nginx.keda.svc.cluster.local:80
             echo "Sent request to the target service"
             sleep 0.1  # Adjust the delay between requests as needed
           done
